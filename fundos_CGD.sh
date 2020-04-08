@@ -1,22 +1,36 @@
 #!/usr/bin/env bash
 
 # ---------- CONSTANTES
+CX_ACOES_EUROPA_SOC_RESP="EU"
+CX_ACOES_EUA="EUA"
+CX_ACOES_PORTUGAL_ESPANHA="PT"
+CX_ACOES_ORI="ORI"
+CX_ACOES_EMERGENTES="EMER"
+CX_ACOES_LIDERES_GLOBAIS="GLOB"
+CAIXA_REFORMA_ACTIVA="Reforma"
 
 
 # ---------- FUNÇÕES
 # Manual de Utilização do Comando
 function ajuda(){
-    echo "----- MANUAL DE UTILIZACAO ------"
+    echo "$TESTE"
 }
 
 # Descarrega a página 
 function descarregarPagina(){
-    echo "------ DESCARREGAR PAGINA -------"
+    # Data formatada em AnoMesDia
+    data="$(date +"%Y%m%d")"
+    nome_ficheiro="fundos_CGD_$data.html"
+    
+    # Descarregar ficheiro para o caminho desejado (fundos_CGD_DATA.html)
+    $(wget https://www.cgd.pt/Particulares/Poupanca-Investimento/Fundos-de-Investimento/Pages/CotacoeseRendibilidades.aspx -O $nome_ficheiro)
+    
 }
 
 function lerFicheiro(){
     echo "------- Ler ficheiro ------"
 }
+
 
 # ---------- MAIN SCRIPT
 
