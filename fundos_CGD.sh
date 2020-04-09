@@ -1,13 +1,20 @@
 #!/usr/bin/env bash
 
 # ---------- CONSTANTES
-CX_ACOES_EUROPA_SOC_RESP="EU"
-CX_ACOES_EUA="EUA"
-CX_ACOES_PORTUGAL_ESPANHA="PT"
-CX_ACOES_ORI="ORI"
-CX_ACOES_EMERGENTES="EMER"
-CX_ACOES_LIDERES_GLOBAIS="GLOB"
-CAIXA_REFORMA_ACTIVA="Reforma"
+CX_ACOES_EUROPA_SOC_RESP="Cx Ações Europa Soc Resp"
+CX_ACOES_EUROPA_SOC_RESP_ABREV="EU"
+CX_ACOES_EUA="Cx Ações EUA"
+CX_ACOES_EUA_ABREV="EUA"
+CX_ACOES_PORTUGAL_ESPANHA="Cx Ações Portugal Espanha"
+CX_ACOES_PORTUGAL_ESPANHA_ABREV="PT"
+CX_ACOES_ORI="Cx Ações Oriente"
+CX_ACOES_ORI_ABREV="ORI"
+CX_ACOES_EMERGENTES="Cxg Ações Emergentes"
+CX_ACOES_EMERGENTES_ABREV="EMER"
+CX_ACOES_LIDERES_GLOBAIS="Cx Ações Líderes Globais"
+CX_ACOES_LIDERES_GLOBAIS_ABREV="GLOB"
+CAIXA_REFORMA_ACTIVA="Caixa Reforma Activa"
+CAIXA_REFORMA_ACTIVA_ABREV="Reforma"
 
 DATA_ATUAL_YMD="$(date +"%Y%m%d")"
 DATA_ATUAL_Y_M_D="$(date +"%d-%m-%Y")"
@@ -19,7 +26,7 @@ CABECALHO="Fundo|data|data-1|12meses|24meses"
 # ---------- FUNÇÕES
 # Manual de Utilização do Comando
 function ajuda(){
-    echo "$TESTE"
+    echo "_HELP_"
 }
 
 # Descarrega a página 
@@ -35,17 +42,18 @@ function lerFicheiro(){
         echo "$CABECALHO_DATA"
         echo "$CABECALHO"
 
-        # Extrair informações "Cx Ações Europa Soc Resp"
-        echo "$CX_ACOES_EUROPA_SOC_RESP|$(grep -A7 "Cx Ações Europa Soc Resp" $NOME_FICHEIRO \
-        | tail -n 7 \
+        # Info Cx Ações Europa Soc Resp
+        echo $(grep -A7 "$CX_ACOES_EUROPA_SOC_RESP" $NOME_FICHEIRO \
+        | sed "s/\b$CX_ACOES_EUROPA_SOC_RESP\b/$CX_ACOES_EUROPA_SOC_RESP_ABREV/g" \
         | tr -d " " \
         | tr -d "\</td\>" \
-        | tr -d "[67]" \
+        | tr -d "\</a\>" \
+        | sed 's/\[.\]//g' \
         | tr -d "€" \
         | tr "," "." \
         | sed -r '/^\s*$/d' \
         | tr "\n" "\|" \
-        | tr -d "\r")"
+        | tr -d "\r")
 
     else 
         echo "$NOME_FICHEIRO não existe"
