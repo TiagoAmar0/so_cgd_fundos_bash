@@ -108,6 +108,9 @@ function extractFileInformations(){
    
             # Extracts the information of the current fund to a variable
             # We opted to extract to a variable instead of printing right away because we need to extract the daily cotation to enter in the file
+            # We got the information about removing blank lines with sed command at: 
+            # https://stackoverflow.com/questions/16414410/delete-empty-lines-using-sed
+            # The information about regular expressions we got by the book "The Linux Command Line, William E. Shotts, Jr. (creative common license - http://linuxcommand.org/tlcl.php), 2019"
             text=$(grep -A7 "${ABREVIATIONS_ARRAY["${i}1"]}" $HTML_FILENAME | sed "s/\b${ABREVIATIONS_ARRAY["${i}1"]}\b/${ABREVIATIONS_ARRAY["${i}2"]}/g" | tr -d " " | sed "s/<[^>]\+>//g" | sed 's/\[.\]//g' | tr -d "€" | tr "," "." | sed -r '/^\s*$/d' | tr "\n" "\|" | tr -d "\r")
 
             # Print table row
