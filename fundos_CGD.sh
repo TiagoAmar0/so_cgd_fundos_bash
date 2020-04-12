@@ -142,8 +142,12 @@ function extractFileInformations(){
 
 if (($# > 0)); then
     # There are parameters inserted 
-    # We use a switch case to find out what parameter(s) was(were) inserted
-    while [[ -n $1 ]]; do
+
+    # Check if more than one parameter was inserted. If so, show error
+    if (($# > 1)); then
+        echo -e "[ERRO]: O programa apenas pode ser executado das seguintes maneiras: \n\t - \"./fundos_CGD.sh\" \n\t - \"./fundos_CGD.sh -i\" \n\t - \"./fundos_CGD.sh\""
+    else
+        # We use a switch case to find out what parameter(s) was(were) inserted
         case "$1" in 
             -h)
                 # Call to a function to show command help
@@ -153,6 +157,7 @@ if (($# > 0)); then
             -i)
                 # Call to a function to download the HTML file
                 downloadHTMLFile
+                exit
             ;;
             *)
                 # Shows error because it was inserted a invalid parameter
@@ -160,8 +165,8 @@ if (($# > 0)); then
                 exit
             ;;
         esac
-    shift
-    done
+
+    fi
 else 
     # Call to a function to extract data from the HTML file
     extractFileInformations
